@@ -7,3 +7,8 @@ def multiples(x):
         return 'Foo'
     else:
         return 'Far'
+
+# Test.assert_equals(multiples(49), "Fizz")
+# Test.assert_equals(multiples(147), "Fang")
+# Test.assert_equals(multiples(30), "Foo")
+# Test.assert_equals(multiples(51), "Far")
