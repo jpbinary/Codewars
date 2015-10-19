@@ -2,12 +2,17 @@ def calc_potential_chairs(seats_taken_c):
     '''calculate what potential chairs the next person should sit in.
      based on distance to other occupied chairs.'''
     seats_taken_c_index_location = 0
-    potential_chairs_c = []
-    while seats_taken_c_index_location < len(seats_taken_c) - 1:
-        potential_chairs_c = (seats_taken_c[seats_taken_c_index_location] + \
-                             seats_taken_c[seats_taken_c_index_location + 1]) / 2
+    # need dictionary to hold potential chair as key, and a 2 item list with the
+    # distance from the occupied chairs to the potential chair
+    potential_chairs_and_distance_to_closest_occupied_chairs = []
+    while seats_taken_c_index_location < len(seats_taken_c)-1:
+        # take value of list item at index plus value of list item at index+1
+        # and divide them by 2. This is the mid-way point between the two chairs.
+        potential_chairs_and_distance_to_closest_occupied_chairs.append((seats_taken_c[seats_taken_c_index_location] + \
+                             seats_taken_c[seats_taken_c_index_location + 1]) / 2)
         seats_taken_c_index_location += 1
-    return potential_chairs_c
+        # need to calc and save distance to other seats<<<
+    return potential_chairs_and_distance_to_closest_occupied_chairs
 
 def what_seats_are_taken(chairs_people_w):
     '''create dict with seats that are currently taken'''
