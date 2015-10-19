@@ -1,8 +1,23 @@
+def calc_potential_chairs(seats_taken_c):
+    '''calculate what potential chairs the next person should sit in.
+     based on distance to other occupied chairs.'''
+    seats_taken_c_index_location = 0
+    potential_chairs_c = []
+    while seats_taken_c_index_location < len(seats_taken_c) - 1:
+        potential_chairs_c = (seats_taken_c[seats_taken_c_index_location] + \
+                             seats_taken_c[seats_taken_c_index_location + 1]) / 2
+        seats_taken_c_index_location += 1
+    return potential_chairs_c
+
 def what_seats_are_taken(chairs_people_w):
     '''create dict with seats that are currently taken'''
+    seats_taken_w = []
     for chair, person in chairs_people_w.items():
-        print chair
-
+        ''' if person is in chair, save chair to seats_taken'''
+        if person != 0:
+            seats_taken_w.append(chair)
+        print chair, person
+    return seats_taken_w
 
 def assign_first_and_second_person_chairs(chairs_people_a):
     ''' assign first person to first chair and second person to last chair'''
@@ -24,7 +39,11 @@ def last_chair(n):
     print chairs_people
     chairs_people = assign_first_and_second_person_chairs(chairs_people)
     print chairs_people
-    what_seats_are_taken(chairs_people)
+    seats_taken = what_seats_are_taken(chairs_people)
+    print seats_taken
+    potential_chairs = calc_potential_chairs(seats_taken)
+    print potential_chairs
+
     return
 
 
