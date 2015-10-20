@@ -3,13 +3,14 @@
     print potential_chairs_and_distance_to_closest_occupied_chairs_calc
     pass
 '''
-def calc_distance_to_chairs(potential_chair_cdc, chair_number):
+def calc_distance_to_chairs(potential_chair_cdc, first_chair_number, second_chair_number):
     print potential_chair_cdc
-    print chair_number
-    distance_to_chair = abs(potential_chair_cdc-chair_number)
-    print distance_to_chair
-
-    pass
+    print first_chair_number
+    distance_to_first_chair = abs(potential_chair_cdc-first_chair_number)
+    distance_to_second_chair = abs(potential_chair_cdc-second_chair_number)
+    print distance_to_first_chair, distance_to_second_chair
+    print distance_to_first_chair + distance_to_second_chair
+    return distance_to_first_chair + distance_to_second_chair
 
 def calc_potential_chairs(seats_taken_c):
     '''calculate what potential chairs the next person should sit in.
@@ -18,7 +19,6 @@ def calc_potential_chairs(seats_taken_c):
     # need dictionary to hold potential chair as key, and a 2 item list with the
     # distance from the occupied chairs to the potential chair
 
-    #potential_chairs_and_distance_to_closest_occupied_chairs = []
     potential_chairs_and_distance_to_closest_occupied_chairs = {}
     while seats_taken_c_index_location < len(seats_taken_c)-1:
         # take value of list item at index plus value of list item at index+1
@@ -29,14 +29,10 @@ def calc_potential_chairs(seats_taken_c):
         # equal to the potential chair, and a value equal to the distance to the 2
         # closest occupied chairs combined
         potential_chairs_and_distance_to_closest_occupied_chairs[potential_chair] = \
-            [calc_distance_to_chairs(potential_chair, seats_taken_c[seats_taken_c_index_location]),
-             calc_distance_to_chairs(potential_chair, seats_taken_c[seats_taken_c_index_location + 1])]
-
-        #calc_distance_from_potential_chair_to_closest_occupied_chairs(
-            #seats_taken_c, potential_chairs_and_distance_to_closest_occupied_chairs)
-
+            calc_distance_to_chairs(potential_chair,
+                                    seats_taken_c[seats_taken_c_index_location],
+                                    seats_taken_c[seats_taken_c_index_location + 1])
         seats_taken_c_index_location += 1
-        # need to calc and save distance to other seats<<<
     return potential_chairs_and_distance_to_closest_occupied_chairs
 
 def what_seats_are_taken(chairs_people_w):
