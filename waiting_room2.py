@@ -13,23 +13,29 @@ def calc_potential_chairs(seats_taken_c):
      based on distance to other occupied chairs.'''
 
     seats_taken_c_index_location = 0
-    # need dictionary to hold potential chair as key, and a 2 item list with the
+    # need dictionary to hold potential chair as key, and a vlaue with the
     # distance from the occupied chairs to the potential chair
     potential_chairs_and_distance_to_closest_occupied_chairs = {}
 
     while seats_taken_c_index_location < len(seats_taken_c)-1:
         # take value of list item at index plus value of list item at index+1
         # and divide them by 2. This is the mid-way point between the two chairs.
+
         potential_chair = (seats_taken_c[seats_taken_c_index_location] + \
             seats_taken_c[seats_taken_c_index_location + 1]) / 2
+        print "calc_potential_chairs potential_chair, ", potential_chair
+        if potential_chair in seats_taken_c:
+            print "potential chair is already taken: ", potential_chair
         # update the potential_chairs_and_distance_to_closest_occupied_chairs with a key value
         # equal to the potential chair, and a value equal to the distance to the 2
         # closest occupied chairs combined
-        potential_chairs_and_distance_to_closest_occupied_chairs[potential_chair] = \
-            calc_distance_to_occupied_chairs(potential_chair,
-                                    seats_taken_c[seats_taken_c_index_location],
-                                    seats_taken_c[seats_taken_c_index_location + 1])
+        else:
+            potential_chairs_and_distance_to_closest_occupied_chairs[potential_chair] = \
+                calc_distance_to_occupied_chairs(potential_chair,
+                                                 seats_taken_c[seats_taken_c_index_location],
+                                                 seats_taken_c[seats_taken_c_index_location + 1])
         seats_taken_c_index_location += 1
+    print "potential_chairs_and_distance_to_closest_occupied_chairs: ", potential_chairs_and_distance_to_closest_occupied_chairs
     return potential_chairs_and_distance_to_closest_occupied_chairs
 
 def what_seats_are_taken(chairs_people_w):
@@ -68,40 +74,48 @@ def last_chair(n):
         chairs_people = assign_first_and_second_person_chairs(chairs_people)
         print chairs_people
         seats_taken = what_seats_are_taken(chairs_people)
-        print seats_taken
+        print "seats taken: ", seats_taken
 
         # 3rd person enters
         count_person_who_enters = 3
         while count_person_who_enters <= n:
+            #potential_chairs = {}
+            print "seats taken: ", seats_taken
             potential_chairs = calc_potential_chairs(seats_taken)
             print 'potential chairs: ', potential_chairs
 
             # if there is only 1 potential chair, the person sits down in this chair
             if len(potential_chairs) == 1:
-                for key in potential_chairs:
-                    chairs_people[key] = count_person_who_enters
+                for chair in potential_chairs:
+                    chairs_people[chair] = count_person_who_enters
+                print "chairs_people -- if ", chairs_people
+                seats_taken = what_seats_are_taken(chairs_people)
+                print "seats taken: ", seats_taken
+                
             # if there are more than 1 potential chair, the person sits down in the chair
             # with the greatest distance to the other occupied chairs
             else:
                 total_chairs_to_check_count = 0
                 total_chairs_to_check = len(potential_chairs)
+                print "chairs_people -- else ", chairs_people
                 while total_chairs_to_check_count < len(potential_chairs):
-
+                    print "potential chair ", potential_chairs[total_chairs_to_check_count]
+                    #for potential_chair, potential_chair_distance in potential_chairs.iteritems():
+                    #    selected_chair = potential_chair
                     total_chairs_to_check_count += 1
 
-                #for potential_chair, potential_chair_distance in potential_chairs.iteritems():
-                #    selected_chair = potential_chair
+
 
                 #print potential_chair, potential_chair_distance
                 # update seats taken
 
-            print chairs_people
+            print "while loop chairs people ", chairs_people
             print "count ", count_person_who_enters
             count_person_who_enters += 1
-    return
+        return "unknown last chair"
 
 
 
-last_chair(10)
+print "last chair is ", last_chair(5)
 #last_chair(10)
 #last_chair(5)
