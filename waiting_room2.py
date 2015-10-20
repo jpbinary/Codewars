@@ -2,6 +2,7 @@
 2nd attempt to solve Waiting room 7 kyu problem
 
 Still incomplete: "Process was terminated. It took longer than 6000ms to complete"
+Over 800 chairs and takes over 5 sec.
 '''
 import operator
 
@@ -145,4 +146,4 @@ def last_chair(n):
 
 
 
-last_chair(1000)
+last_chair(5)
