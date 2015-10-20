@@ -3,14 +3,13 @@
     print potential_chairs_and_distance_to_closest_occupied_chairs_calc
     pass
 '''
-def calc_distance_to_first_chair(first_chair_number):
-    print first_chair_number
-    pass
+def calc_distance_to_chairs(potential_chair_cdc, chair_number):
+    print potential_chair_cdc
+    print chair_number
+    distance_to_chair = abs(potential_chair_cdc-chair_number)
+    print distance_to_chair
 
-def calc_distance_to_second_chair(second_chair_number):
-    print second_chair_number
     pass
-
 
 def calc_potential_chairs(seats_taken_c):
     '''calculate what potential chairs the next person should sit in.
@@ -24,13 +23,14 @@ def calc_potential_chairs(seats_taken_c):
     while seats_taken_c_index_location < len(seats_taken_c)-1:
         # take value of list item at index plus value of list item at index+1
         # and divide them by 2. This is the mid-way point between the two chairs.
-        #potential_chairs_and_distance_to_closest_occupied_chairs.append((seats_taken_c[seats_taken_c_index_location] + \
-                             #seats_taken_c[seats_taken_c_index_location + 1]) / 2)
         potential_chair = (seats_taken_c[seats_taken_c_index_location] + \
             seats_taken_c[seats_taken_c_index_location + 1]) / 2
+        # update the potential_chairs_and_distance_to_closest_occupied_chairs with a key value
+        # equal to the potential chair, and a value equal to the distance to the 2
+        # closest occupied chairs combined
         potential_chairs_and_distance_to_closest_occupied_chairs[potential_chair] = \
-            [calc_distance_to_first_chair(seats_taken_c[seats_taken_c_index_location]),
-             calc_distance_to_second_chair(seats_taken_c[seats_taken_c_index_location + 1])]
+            [calc_distance_to_chairs(potential_chair, seats_taken_c[seats_taken_c_index_location]),
+             calc_distance_to_chairs(potential_chair, seats_taken_c[seats_taken_c_index_location + 1])]
 
         #calc_distance_from_potential_chair_to_closest_occupied_chairs(
             #seats_taken_c, potential_chairs_and_distance_to_closest_occupied_chairs)
