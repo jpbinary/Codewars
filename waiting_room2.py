@@ -61,6 +61,7 @@ def last_chair(n):
     if n <= 2:
         print "please enter a value greater than 2"
     else:
+        # initialize chairs
         chairs_people = init_chairs_people(n)
         print chairs_people
         # 1st and 2nd person enter
@@ -70,21 +71,37 @@ def last_chair(n):
         print seats_taken
 
         # 3rd person enters
-        potential_chairs = calc_potential_chairs(seats_taken)
-        print 'potential chairs: ', potential_chairs
+        count_person_who_enters = 3
+        while count_person_who_enters <= n:
+            potential_chairs = calc_potential_chairs(seats_taken)
+            print 'potential chairs: ', potential_chairs
+
+            # if there is only 1 potential chair, the person sits down in this chair
+            if len(potential_chairs) == 1:
+                for key in potential_chairs:
+                    chairs_people[key] = count_person_who_enters
+            # if there are more than 1 potential chair, the person sits down in the chair
+            # with the greatest distance to the other occupied chairs
+            else:
+                total_chairs_to_check_count = 0
+                total_chairs_to_check = len(potential_chairs)
+                while total_chairs_to_check_count < len(potential_chairs):
+
+                    total_chairs_to_check_count += 1
+
+                #for potential_chair, potential_chair_distance in potential_chairs.iteritems():
+                #    selected_chair = potential_chair
+
+                #print potential_chair, potential_chair_distance
+                # update seats taken
+
+            print chairs_people
+            print "count ", count_person_who_enters
+            count_person_who_enters += 1
+    return
 
 
-        for potential_chair, potential_chair_distance in potential_chairs.iteritems():
-            print potential_chair, potential_chair_distance
-        if len(potential_chairs) == 1:
-            chairs_people.update(potential_chairs)
-        print chairs_people
 
-
-        return
-
-
-
-last_chair(2)
+last_chair(10)
 #last_chair(10)
 #last_chair(5)
