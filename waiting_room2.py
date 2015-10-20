@@ -1,3 +1,4 @@
+import operator
 
 def calc_distance_to_occupied_chairs(potential_chair_cdc, first_chair_number, second_chair_number):
     print potential_chair_cdc
@@ -128,18 +129,15 @@ def last_chair(n):
                 # seats taken is updated with latest change
                 seats_taken = what_seats_are_taken(chairs_people)
 
-
-
-                #print potential_chair, potential_chair_distance
-                # update seats taken
-
             print "while loop chairs people ", chairs_people
             print "count ", count_person_who_enters
             count_person_who_enters += 1
-        return "unknown last chair"
+
+        # determine the last patients chair number
+        last_patient_chair_number = max(chairs_people.iteritems(), key=operator.itemgetter(1))[0]
+        print "last patient chair number ", last_patient_chair_number
+        return last_patient_chair_number
 
 
 
-print "last chair is ", last_chair(5)
-#last_chair(10)
-#last_chair(5)
+last_chair(10)
