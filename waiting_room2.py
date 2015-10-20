@@ -1,5 +1,7 @@
 '''
 2nd attempt to solve Waiting room 7 kyu problem
+
+Still incomplete: "Process was terminated. It took longer than 6000ms to complete"
 '''
 import operator
 
@@ -143,4 +145,4 @@ def last_chair(n):
 
 
 
-last_chair(10)
+last_chair(1000)
