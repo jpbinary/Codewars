@@ -1,3 +1,6 @@
+'''
+2nd attempt to solve Waiting room 7 kyu problem
+'''
 import operator
 
 def calc_distance_to_occupied_chairs(potential_chair_cdc, first_chair_number, second_chair_number):
