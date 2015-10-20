@@ -87,22 +87,46 @@ def last_chair(n):
             # if there is only 1 potential chair, the person sits down in this chair
             if len(potential_chairs) == 1:
                 for chair in potential_chairs:
+                    # person takes their seat
                     chairs_people[chair] = count_person_who_enters
                 print "chairs_people -- if ", chairs_people
+                # seats taken is updated with latest change
                 seats_taken = what_seats_are_taken(chairs_people)
                 print "seats taken: ", seats_taken
-                
+
             # if there are more than 1 potential chair, the person sits down in the chair
-            # with the greatest distance to the other occupied chairs
+            # with the greatest distance to the other occupied chairs.
+            # if the chairs are the same distance, then the person sits down in the
+            # chair with the lowest number (closest to exit).
             else:
                 total_chairs_to_check_count = 0
                 total_chairs_to_check = len(potential_chairs)
+                print 'potential chairs -- else: ', potential_chairs
                 print "chairs_people -- else ", chairs_people
+                selected_chair = -1
+                selected_chair_distance = -1
                 while total_chairs_to_check_count < len(potential_chairs):
-                    print "potential chair ", potential_chairs[total_chairs_to_check_count]
-                    #for potential_chair, potential_chair_distance in potential_chairs.iteritems():
-                    #    selected_chair = potential_chair
+                    for potential_chair, potential_chair_distance in potential_chairs.iteritems():
+                        if selected_chair == -1:
+                            selected_chair = potential_chair
+                            selected_chair_distance = potential_chair_distance
+                        elif potential_chair_distance > selected_chair_distance:
+                            selected_chair = potential_chair
+                            selected_chair_distance = potential_chair_distance
+                        elif potential_chair_distance == selected_chair_distance:
+                            if selected_chair < potential_chair:
+                                selected_chair = selected_chair
+                                selected_chair_distance = selected_chair_distance
+                            else:
+                                selected_chair = potential_chair
+                                selected_chair_distance = potential_chair_distance
+
                     total_chairs_to_check_count += 1
+                print "selected chair: ", selected_chair
+                # person takes their seat
+                chairs_people[selected_chair] = count_person_who_enters
+                # seats taken is updated with latest change
+                seats_taken = what_seats_are_taken(chairs_people)
 
 
 
