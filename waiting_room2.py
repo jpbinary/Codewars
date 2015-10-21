@@ -3,25 +3,33 @@
 
 Still incomplete: "Process was terminated. It took longer than 6000ms to complete"
 Over 800 chairs and takes over 5 sec.
+
+This code works, but was too slow. The answer that computes fastest is:
+
+def last_chair(n):
+    return n - 1
+
+Basically, it was a trick question. I noticed this easy answer initially but thought this was a coding questions.
 '''
 #import operator
 import timeit
 
-def calc_distance_to_occupied_chairs(potential_chair_cdc, first_chair_number, second_chair_number):
-    #print potential_chair_cdc
-    #print first_chair_number
-    distance_to_first_chair = abs(potential_chair_cdc-first_chair_number)
-    distance_to_second_chair = abs(potential_chair_cdc-second_chair_number)
-    #print distance_to_first_chair, distance_to_second_chair
-    #print distance_to_first_chair + distance_to_second_chair
-    return distance_to_first_chair + distance_to_second_chair
+# try removing this function to increase speed.
+# def calc_distance_to_occupied_chairs(potential_chair_cdc, first_chair_number, second_chair_number):
+#     #print potential_chair_cdc
+#     #print first_chair_number
+#     distance_to_first_chair = abs(potential_chair_cdc-first_chair_number)
+#     distance_to_second_chair = abs(potential_chair_cdc-second_chair_number)
+#     #print distance_to_first_chair, distance_to_second_chair
+#     #print distance_to_first_chair + distance_to_second_chair
+#     return distance_to_first_chair + distance_to_second_chair
 
 def calc_potential_chairs(seats_taken_c):
     '''calculate what potential chairs the next person should sit in.
      based on distance to other occupied chairs.'''
 
     seats_taken_c_index_location = 0
-    # need dictionary to hold potential chair as key, and a vlaue with the
+    # need dictionary to hold potential chair as key, and a value with the
     # distance from the occupied chairs to the potential chair
     potential_chairs_and_distance_to_closest_occupied_chairs = {}
 
@@ -39,10 +47,17 @@ def calc_potential_chairs(seats_taken_c):
         # equal to the potential chair, and a value equal to the distance to the 2
         # closest occupied chairs combined
         else:
-            potential_chairs_and_distance_to_closest_occupied_chairs[potential_chair] = \
-                calc_distance_to_occupied_chairs(potential_chair,
-                                                 seats_taken_c[seats_taken_c_index_location],
-                                                 seats_taken_c[seats_taken_c_index_location + 1])
+            distance_to_first_chair = abs(potential_chair-seats_taken_c[seats_taken_c_index_location])
+            distance_to_second_chair = abs(potential_chair-seats_taken_c[seats_taken_c_index_location + 1])
+            total_distance = distance_to_first_chair + distance_to_second_chair
+
+            potential_chairs_and_distance_to_closest_occupied_chairs[potential_chair] = total_distance
+
+            # potential_chairs_and_distance_to_closest_occupied_chairs[potential_chair] = \
+            #     calc_distance_to_occupied_chairs(potential_chair,
+            #                                      seats_taken_c[seats_taken_c_index_location],
+            #                                      seats_taken_c[seats_taken_c_index_location + 1])
+
         seats_taken_c_index_location += 1
     #print "potential_chairs_and_distance_to_closest_occupied_chairs: ", potential_chairs_and_distance_to_closest_occupied_chairs
     return potential_chairs_and_distance_to_closest_occupied_chairs
@@ -50,11 +65,15 @@ def calc_potential_chairs(seats_taken_c):
 def what_seats_are_taken(chairs_people_w):
     '''create dict with seats that are currently taken'''
     seats_taken_w = []
-    for chair, person in chairs_people_w.items():
-        ''' if person is in chair, save chair to seats_taken'''
-        if person != 0:
-            seats_taken_w.append(chair)
+    # Rewrote to use list comprehension
+    seats_taken_w = [chair for chair, person in chairs_people_w.iteritems() if person != 0]
+
+    # for chair, person in chairs_people_w.iteritems():
+    #      ''' if person is in chair, save chair to seats_taken'''
+    #      if person != 0:
+    #          seats_taken_w.append(chair)
         #print chair, person
+
     return seats_taken_w
 
 def assign_first_and_second_person_chairs(chairs_people_a):
@@ -89,7 +108,6 @@ def last_chair(n):
         # 3rd person enters
         count_person_who_enters = 3
         while count_person_who_enters <= n:
-            print timeit.default_timer()
             #potential_chairs = {}
             #print "seats taken: ", seats_taken
             potential_chairs = calc_potential_chairs(seats_taken)
@@ -138,6 +156,7 @@ def last_chair(n):
                 chairs_people[selected_chair] = count_person_who_enters
                 # seats taken is updated with latest change
                 seats_taken = what_seats_are_taken(chairs_people)
+                #print "seats taken: ", seats_taken
 
             #print "while loop chairs people ", chairs_people
             #print "count ", count_person_who_enters
