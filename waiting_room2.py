@@ -8,8 +8,6 @@ This code works, but was too slow. The answer that computes fastest is:
 
 def last_chair(n):
     return n - 1
-
-Basically, it was a trick question. I noticed this easy answer initially but thought this was a coding questions.
 '''
 #import operator
 import timeit
